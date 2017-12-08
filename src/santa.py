@@ -19,7 +19,7 @@ def calculate_kid_id(sack, present):
 
 def calculate_factors(x):
     """ Find all pairs of integers whose product equals x. """
-    factors = [(sack, int(x / sack)) for sack in range(1, int(x ** 0.5) + 1) if (float(x) / sack).is_integer()]
+    factors = [(sack, x // sack) for sack in range(1, int(x ** 0.5) + 1) if (float(x) / sack).is_integer()]
     return factors + [(x[1], x[0]) for x in factors if x[0] != x[1]]
 
 
