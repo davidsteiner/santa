@@ -1,29 +1,25 @@
-module Santa ( AllocatedPresent(..)
-             , calculateCheckSum
-             , findSolution
-  ) where
+module Santa (findSolution) where
 
 import Data.Tuple
 
-data AllocatedPresent = AllocatedPresent { kid :: Integer
-                                         , sack :: Integer
-                                         , present :: Integer } deriving Show
 
 findFirst :: Integer -> Integer
 findFirst 1    = 1
 findFirst sack = sack ^ 2 `quot` 2
 
-findKid :: Integer -> Integer -> Integer
-findKid sack 1 = findFirst sack
-findKid sack present =
-  let initialSquare = if odd sack && sack > 1 then sack - 1 else sack
+
+-- Calculate the kid's ID for given sack and present pair
+findKid :: (Integer, Integer) -> Integer
+findKid (sack, present) =
+  let
+      initialSquare = if odd sack && sack > 1 then sack - 1 else sack
       finalSquare = initialSquare + present - 1
       sign = if odd $ initialSquare + finalSquare then 1 else -1
-      summedSquares = sumOfSequence finalSquare + sign * sumOfSequence initialSquare
+      summedSquares = sumTo finalSquare + sign * sumTo initialSquare
   in summedSquares - (1 - 2 * (present `rem` 2)) * findFirst sack
-
-sumOfSequence :: Integer -> Integer
-sumOfSequence to = (1 + to) * to `quot` 2
+  where
+    -- Sum numbers from 1 to n, e.g. for n = 3, then return 1 + 2 + 3 = 6
+    sumTo n = (1 + n) * n `quot` 2
 
 findFactors :: Integer -> [(Integer, Integer)]
 findFactors n =
@@ -35,13 +31,6 @@ findFactors n =
     -- The list of factor pairs, e.g. if n == 10 then (1, 10), (2, 5)
     factorPairs = (\sack -> (sack, n `quot` sack)) <$> divisors
 
-findSolution :: Integer -> [AllocatedPresent]
+findSolution :: Integer -> Integer
 findSolution x =
-  allocatePresent <$> findFactors x
-  where
-    allocatePresent (sack, present) = AllocatedPresent { kid = findKid sack present
-                                                       , sack = sack
-                                                       , present = present }
-
-calculateCheckSum :: [AllocatedPresent] -> Integer
-calculateCheckSum presents = sum (kid <$> presents) `rem` 10^9
+  sum (findKid <$> findFactors x) `rem` 10^8
