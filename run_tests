@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Run the haskell hspec and python nose tests
+
+echo -e "Running hspec tests..."
+echo -e "----------------------"
+stack test
+
+echo -e "\n\nRunning nose tests"
+echo -e "------------------"
+nosetests -v

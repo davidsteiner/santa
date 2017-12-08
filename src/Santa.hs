@@ -29,7 +29,7 @@ calculateFactors n =
   factorPairs ++ map swap (filter (uncurry (/=)) factorPairs)
   where
     -- x divisors of n up to where x^2 >= n, rest is calculated by swapping pairs
-    divisors = filter ((==0) . rem n) (takeWhile ((<=n) . (^2)) [1..n])
+    divisors = filter ((==0) . rem n) (takeWhile ((<=n) . (^2)) [1..])
     -- The list of factor pairs, e.g. if n == 10 then (1, 10), (2, 5)
     factorPairs = (\sack -> (sack, n `quot` sack)) <$> divisors
 
