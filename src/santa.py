@@ -1,6 +1,6 @@
 def find_first(sack):
     """ Find the ID of the first kid who gets allocated a present from the supplied sack. """
-    return 1 if sack == 1 else int(sack ** 2 / 2)
+    return 1 if sack == 1 else sack ** 2 // 2
 
 
 def calculate_kid_id(sack, present):
