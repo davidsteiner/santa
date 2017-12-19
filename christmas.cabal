@@ -12,7 +12,7 @@ build-type:          Simple
 extra-source-files:  README.md
 cabal-version:       >=1.10
 
-description:         Please see the README on Github at <https://github.com/davidsteiner/christmas#readme>
+description:         Please see the README on Github at <https://gitlab.com/davidsteiner/santa#readme>
 
 library
   hs-source-dirs:      src
